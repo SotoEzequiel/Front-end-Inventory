@@ -1,18 +1,24 @@
 // src/components/RegisterForm.jsx
 import React, { useState } from 'react';
 import { registerUser } from '../../Services/api';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+  const navigate = useNavigate(); 
+
   const [formData, setFormData] = useState({
     nameUser: '',
     email: '',
     password: '',
-    role:'admin'
+    role: 'admin',
   });
+
+
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,10 +34,26 @@ const RegisterForm = () => {
     setError(null);
     setSuccess(false);
 
+
+    if (!formData.nameUser || !formData.email || !formData.password) {
+      setError('Por favor, complete todos los campos.');
+      setLoading(false);
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setError('El correo electrónico no es válido.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await registerUser(formData);
-      console.log(response);
+      console.log(response); 
+
+
       setSuccess(true);
+      setFormData({ nameUser: '', email: '', password: '', role: 'admin' }); // Limpiar formulario después del éxito
     } catch (err) {
       setError('Hubo un problema al registrar el usuario.');
     } finally {
@@ -42,8 +64,13 @@ const RegisterForm = () => {
   return (
     <div>
       <h2>Registro</h2>
-      {success && <p>Registro exitoso!</p>}
+      
+      {/* Mensaje de éxito */}
+      {success && <p>¡Registro exitoso!</p>}
+      
+      {/* Mensaje de error */}
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
@@ -75,6 +102,20 @@ const RegisterForm = () => {
             required
           />
         </div>
+        {/* Si quieres permitir que el usuario seleccione su rol */}
+        <div>
+          <label>Role:</label>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleInputChange}
+          >
+            <option value="user">Usuario</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+
+        {/* Botón de envío */}
         <button type="submit" disabled={loading}>
           {loading ? 'Registrando...' : 'Registrar'}
         </button>

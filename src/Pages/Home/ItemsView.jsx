@@ -45,7 +45,7 @@ const ItemView = () => {
         
             onClick={() => handleItemClick(item._id)}// Agrega el manejador de clics
           >
-            <h3>{item.tittle}</h3>
+            <h3>{item.title}</h3>
             <p><strong>Talle:</strong> {item.talle}</p>
             <p><strong>Precio:</strong> ${item.price}</p>
             <p><strong>Categoría:</strong> {item.category}</p>
@@ -53,7 +53,7 @@ const ItemView = () => {
             {item.imageUrl && (
               <img
                 src={item.imageUrl}
-                alt={item.tittle}
+                alt={item.title}
                 style={styles.image}
               />
             )}

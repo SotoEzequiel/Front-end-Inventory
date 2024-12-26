@@ -4,7 +4,7 @@ import { createItem } from '../../Services/api';
 const CreateItemForm = () => {
   const [formData, setFormData] = useState({
     userName: '', // ID del usuario
-    tittle: '',
+    title: '',
     talle: '',
     price: '',
     category: '',
@@ -39,7 +39,7 @@ const CreateItemForm = () => {
       // Limpiar el formulario después de enviar
       setFormData({
         userName: '',
-        tittle: '',
+        title: '',
         talle: '',
         price: '',
         category: '',
@@ -65,8 +65,8 @@ const CreateItemForm = () => {
           <label>Título:</label>
           <input
             type="text"
-            name="tittle"
-            value={formData.tittle}
+            name="title"
+            value={formData.title}
             onChange={handleChange}
             required
           />

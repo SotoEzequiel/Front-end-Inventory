@@ -7,6 +7,7 @@ const api = axios.create({
   },
 });
 
+
 // Interceptor para incluir el token en las solicitudes
 api.interceptors.request.use(
   (config) => {
@@ -23,7 +24,7 @@ api.interceptors.request.use(
 export const registerUser = async (userData) => {
   try {
     console.log("Datos enviados para el registro:", userData);
-
+    
     const response = await api.post('/auth/register', userData);
 
     console.log('Datos de la respuesta:', response.data);
@@ -123,7 +124,7 @@ export const getItems = async () => {
   }
 };
 
-export const getItemsById = async (id) => {
+export const getItemById = async (id) => {
   try {
     console.log("id "+id)
     const response = await api.get('/items/'+id); // Usa la instancia configurada de api

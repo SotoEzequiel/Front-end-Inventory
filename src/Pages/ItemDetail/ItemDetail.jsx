@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { logoutUser, getItemsById, deleteItemById } from '../../Services/api';
+import { logoutUser, getItemById, deleteItemById } from '../../Services/api';
 import EditItem from '../EditItem/EditItem';
 
 const ItemDetail = () => {
@@ -14,7 +14,7 @@ const ItemDetail = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const itemData = await getItemsById(id);
+        const itemData = await getItemById(id);
         setItem(itemData);
       } catch (err) {
         console.error('Error al obtener el ítem:', err);
@@ -66,7 +66,7 @@ const ItemDetail = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {!loading && item && !isEditing && (
         <div style={styles.card}>
-          <h2>{item.tittle}</h2>
+          <h2>{item.title}</h2>
           <p><strong>Talle:</strong> {item.talle}</p>
           <p><strong>Precio:</strong> ${item.price}</p>
           <p><strong>Categoría:</strong> {item.category}</p>
@@ -74,7 +74,7 @@ const ItemDetail = () => {
           {item.imageUrl && (
             <img
               src={item.imageUrl}
-              alt={item.tittle}
+              alt={item.title}
               style={styles.image}
             />
           )}

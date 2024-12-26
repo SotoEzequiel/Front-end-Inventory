@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { updateItemById } from '../../Services/api';
 
 
 const EditItem = ({ item, onSave, onCancel }) => {
-  const [editData, setEditData] = useState(item);
-  const [error, setError] = useState(null);
+  const [editData, setEditData] = useState({}); 
+
+  useEffect(() => {
+    if (item) {
+      setEditData(item);
+    }
+  }, [item]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setEditData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSave = async () => {
     try {
-      await updateItemById(item._id, editData); // Llama a la API para actualizar el ítem
-      onSave(editData); // Notifica al componente padre con los datos actualizados
+      await updateItemById(item._id, editData);
+      onSave(editData);
     } catch (err) {
       console.error('Error al actualizar el ítem:', err);
-      setError('Hubo un error al actualizar el ítem.');
     }
   };
+
+  if (!item) {
+    return <p>Cargando datos del ítem...</p>; 
+  }
 
   return (
     <div style={styles.form}>
       <h2>Editar Ítem</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       <label>
-        Tittle:
+        Title:
         <input
           type="text"
-          name="tittle"
-          value={editData.tittle}
+          name="title"
+          value={editData.title || ''} 
           onChange={handleChange}
         />
       </label>
@@ -42,7 +46,7 @@ const EditItem = ({ item, onSave, onCancel }) => {
         <input
           type="text"
           name="talle"
-          value={editData.talle}
+          value={editData.talle || ''} 
           onChange={handleChange}
         />
       </label>
@@ -51,7 +55,7 @@ const EditItem = ({ item, onSave, onCancel }) => {
         <input
           type="number"
           name="price"
-          value={editData.price}
+          value={editData.price || ''} 
           onChange={handleChange}
         />
       </label>
@@ -60,7 +64,7 @@ const EditItem = ({ item, onSave, onCancel }) => {
         <input
           type="text"
           name="category"
-          value={editData.category}
+          value={editData.category || ''} 
           onChange={handleChange}
         />
       </label>
@@ -69,7 +73,7 @@ const EditItem = ({ item, onSave, onCancel }) => {
         <input
           type="text"
           name="color"
-          value={editData.color}
+          value={editData.color || ''} 
           onChange={handleChange}
         />
       </label>
@@ -78,7 +82,7 @@ const EditItem = ({ item, onSave, onCancel }) => {
         <input
           type="text"
           name="images"
-          value={editData.images}
+          value={editData.images || ''} 
           onChange={handleChange}
         />
       </label>

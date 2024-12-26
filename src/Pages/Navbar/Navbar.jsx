@@ -17,13 +17,13 @@ const Navbar = () => {
             <Link to="/createitem" className="navbar-link">Createitem</Link>
           </li>
           <li>
-            <Link to="/EditItem" className="navbar-link">EditItem</Link>
-          </li>
-          <li>
             <Link to="/signin" className="navbar-link">Sign In</Link>
           </li>
           <li>
             <Link to="/register" className="navbar-link">Register</Link>
+          </li>
+          <li>
+            <Link to="/itemsview" className="navbar-link">Todos los items</Link>
           </li>
         </ul>
       </div>
