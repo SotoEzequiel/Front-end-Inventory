@@ -62,7 +62,7 @@ const ItemDetail = () => {
     <div>
       <h1>Detalles del Ítem</h1>
       <button onClick={handleLogout}>Cerrar sesión</button>
-      {loading && <p>Cargando detalles del ítem....</p>}
+      {loading && <p>Cargando detalles del ítem...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {!loading && item && !isEditing && (
         <div style={styles.card}>
