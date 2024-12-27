@@ -71,11 +71,11 @@ const ItemDetail = () => {
           <p><strong>Precio:</strong> ${item.price}</p>
           <p><strong>Categoría:</strong> {item.category}</p>
           <p><strong>Color:</strong> {item.color}</p>
-          {item.images && (
+          {item.image && (
             <img
-              src={item.images}
+              src={item.imageUrl}
               alt={item.title}
-              style={styles.images}
+              style={styles.image}
             />
           )}
           <button style={styles.button} onClick={handleEditClick}>Editar Ítem</button>

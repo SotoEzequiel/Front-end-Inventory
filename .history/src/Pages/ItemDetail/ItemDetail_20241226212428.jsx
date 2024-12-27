@@ -73,7 +73,7 @@ const ItemDetail = () => {
           <p><strong>Color:</strong> {item.color}</p>
           {item.images && (
             <img
-              src={item.images}
+              src={item.image}
               alt={item.title}
               style={styles.images}
             />
