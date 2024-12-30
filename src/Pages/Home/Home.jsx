@@ -1,20 +1,20 @@
-import React from 'react';
-import ItemView from './ItemsView';
-import { logoutUser } from '../../Services/api';
-
-
-const handleLogout = () => {
-  logoutUser();
-};
-
-
+import React from "react";
+import styles from "./Home.module.css";
+import heroImage from "../../assets/imagenhome.jpeg"; // Asegúrate de tener una imagen en esta ruta
 
 const Home = () => {
   return (
-    <div>
-      <h1>Bienvenido a la Página de Inicio</h1>
-      <ItemView/>
-      <button onClick={handleLogout}>Cerrar sesión</button>;
+    <div className={styles.container}>
+      <div className={styles.textContainer}>
+        <h1 className={styles.title}>Bienvenido a Nuestra Plataforma</h1>
+        <p className={styles.subtitle}>
+          Administra nuestros productos y encuentra lo que necesitas con el mejor diseño y calidad. 
+        </p>
+        
+      </div>
+      <div className={styles.imageContainer}>
+        <img src={heroImage} alt="Hero" className={styles.heroImage} />
+      </div>
     </div>
   );
 };

@@ -1,42 +1,53 @@
-// src/components/RegisterForm.jsx
-import React, { useState } from 'react';
-import { registerUser } from '../../Services/api';
+import React, { useState, useContext, useCallback } from 'react';
+import { registerUser } from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import styles from './RegisterForm.module.css'; // CSS Module
+import Button from '../../component/Buttom';
 
 const RegisterForm = () => {
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     nameUser: '',
     email: '',
     password: '',
-    role: 'admin',
+    confirmPassword: '',
+    role: 'user',
   });
-
-
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
-  };
+    }));
+    setError(null);
+  }, []); // Esta función no depende de variables externas y se memoriza
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(false);
 
+    // Validaciones
+    if (!formData.nameUser || formData.nameUser.length < 3 || formData.nameUser.length > 20) {
+      setError('El nombre debe tener entre 3 y 20 caracteres.');
+      setLoading(false);
+      return;
+    }
 
-    if (!formData.nameUser || !formData.email || !formData.password) {
-      setError('Por favor, complete todos los campos.');
+    if (!formData.password || formData.password.length < 6 || formData.password.length > 15) {
+      setError('La contraseña debe tener entre 6 y 15 caracteres.');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Las contraseñas no coinciden.');
       setLoading(false);
       return;
     }
@@ -49,76 +60,79 @@ const RegisterForm = () => {
 
     try {
       const response = await registerUser(formData);
-      console.log(response); 
+      console.log('Registro exitoso:', response);
 
-
-      setSuccess(true);
-      setFormData({ nameUser: '', email: '', password: '', role: 'admin' }); // Limpiar formulario después del éxito
+      if (response?.accessToken) {
+        login(response.accessToken); // Llamamos a login desde el contexto
+        navigate('/itemsview');
+      } else {
+        setError('No se recibió un accessToken válido del servidor.');
+      }
     } catch (err) {
       setError('Hubo un problema al registrar el usuario.');
+      console.error('Error al registrar:', err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [formData, login, navigate]); // Se memoriza y se recrea solo si las dependencias cambian
 
   return (
-    <div>
-      <h2>Registro</h2>
-      
-      {/* Mensaje de éxito */}
-      {success && <p>¡Registro exitoso!</p>}
-      
-      {/* Mensaje de error */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Crea una cuenta</h2>
+      {error && <p className={styles.error}>{error}</p>}
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <label>Nombre de Usuario:</label>
           <input
             type="text"
             name="nameUser"
             value={formData.nameUser}
             onChange={handleInputChange}
+            placeholder="Ej: Usuario123"
             required
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label>Email:</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
+            placeholder="ejemplo@correo.com"
             required
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className={styles.formGroup}>
+          <label>Contraseña:</label>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleInputChange}
+            placeholder="Mínimo 6 caracteres"
             required
           />
         </div>
-        {/* Si quieres permitir que el usuario seleccione su rol */}
-        <div>
-          <label>Role:</label>
-          <select
-            name="role"
-            value={formData.role}
+        <div className={styles.formGroup}>
+          <label>Confirmar Contraseña:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
             onChange={handleInputChange}
-          >
+            placeholder="Repite tu contraseña"
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Rol:</label>
+          <select name="role" value={formData.role} onChange={handleInputChange}>
             <option value="user">Usuario</option>
             <option value="admin">Administrador</option>
           </select>
         </div>
-
-        {/* Botón de envío */}
-        <button type="submit" disabled={loading}>
-          {loading ? 'Registrando...' : 'Registrar'}
-        </button>
+        <Button type="submit" text={"Registrarse"} />
       </form>
     </div>
   );

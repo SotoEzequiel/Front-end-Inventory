@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { createItem } from '../../Services/api';
-
+import { createItem } from '../../services/apiService';
+import styles from "../../pages/CreateItem/CreateItemForm.module.css";
+import Button from '../../component/Buttom';
 const CreateItemForm = () => {
   const [formData, setFormData] = useState({
-    userName: '', // ID del usuario
+    userName: '', 
     title: '',
     talle: '',
     price: '',
     category: '',
     color: '',
-    images: '', // Nuevo campo para el link de la imagesn
+    images: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,13 +31,17 @@ const CreateItemForm = () => {
     setError(null);
     setSuccess(false);
 
+    if (!/https?:\/\/\S+\.\S+/.test(formData.images)) {
+      setError('Por favor, ingrese un enlace de imagen válido.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      // Usar la función `createItem` para enviar los datos
       const response = await createItem(formData);
       console.log('Ítem creado:', response);
       setSuccess(true);
 
-      // Limpiar el formulario después de enviar
       setFormData({
         userName: '',
         title: '',
@@ -48,83 +53,87 @@ const CreateItemForm = () => {
       });
     } catch (err) {
       console.error('Error al crear el ítem:', err);
-      setError('Hubo un error al crear el ítem. Verifica los datos e intenta de nuevo.');
+      setError('Hubo un error al crear el ítem. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Crear Ítem</h2>
-      {success && <p style={{ color: 'green' }}>Ítem creado exitosamente.</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        
-        <div>
-          <label>Título:</label>
+    <div className={styles.formContainer}>
+      <h2 className={styles.formTitle}>Crear Ítem</h2>
+      {success && <p className={styles.successMessage}>Ítem creado exitosamente.</p>}
+      {error && <p className={styles.errorMessage}>{error}</p>}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Título:</label>
           <input
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
+            className={styles.formInput}
             required
           />
         </div>
-        <div>
-          <label>Talle:</label>
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Talle:</label>
           <input
             type="text"
             name="talle"
             value={formData.talle}
             onChange={handleChange}
+            className={styles.formInput}
             required
           />
         </div>
-        <div>
-          <label>Precio:</label>
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Precio:</label>
           <input
             type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
+            className={styles.formInput}
             required
           />
         </div>
-        <div>
-          <label>Categoría:</label>
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Categoría:</label>
           <input
             type="text"
             name="category"
             value={formData.category}
             onChange={handleChange}
+            className={styles.formInput}
             required
           />
         </div>
-        <div>
-          <label>Color:</label>
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Color:</label>
           <input
             type="text"
             name="color"
             value={formData.color}
             onChange={handleChange}
+            className={styles.formInput}
             required
           />
         </div>
-        <div>
-          <label>Link de la imagen:</label>
+        <div className={styles.formGroup}>
+          <label className={styles.formLabel}>Link de la Imagen:</label>
           <input
             type="text"
             name="images"
             value={formData.images}
             onChange={handleChange}
+            className={styles.formInput}
             placeholder="https://example.com/images.jpg"
             required
           />
         </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Creando Ítem...' : 'Crear Ítem'}
-        </button>
+        
+        <Button text='Crear Ítem'  />
       </form>
     </div>
   );

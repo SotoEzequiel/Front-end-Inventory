@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { updateItemById } from '../../Services/api';
+import { updateItemById } from '../../services/apiService';
 
 
 const EditItem = ({ item, onSave, onCancel }) => {

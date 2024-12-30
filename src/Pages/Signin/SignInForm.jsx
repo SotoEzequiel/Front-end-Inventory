@@ -1,76 +1,77 @@
-import React, { useState } from 'react';
-import { signInUser } from '../../Services/api';
+import React, { useState, useContext } from 'react';
+import { signInUser } from '../../services/apiService';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import styles from './SignInForm.module.css';
+import Button from '../../component/Buttom';
 
 const SignInForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(false);
 
     try {
       const response = await signInUser(formData);
       console.log('Respuesta del servidor:', response);
 
-      // Manejo de éxito (ya debería estar guardando el token en api.js)
-      setSuccess(true);
+      if (response?.token) {
+        login(response.token);
+        navigate('/itemsview');
+      }
     } catch (err) {
       setError('Error al iniciar sesión. Verifique sus credenciales.');
-      console.error('Error al iniciar sesión:', err.response?.data || err.message);
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
-      {success && <p>Inicio de sesión exitoso!</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Iniciando...' : 'Iniciar Sesión'}
-        </button>
-      </form>
+    <div className={styles.container}>
+      <div className={styles.formContainer}>
+        <h2 className={styles.title}>Iniciar Sesión</h2>
+        {error && <p className={styles.errorMessage}>{error}</p>}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Correo electrónico</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          
+          <Button text={"Iniciar Sesión"}   />
+        </form>
+      </div>
     </div>
   );
 };
 
-export default SignInForm;
+export default SignInForm

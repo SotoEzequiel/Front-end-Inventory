@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { logoutUser, getItemById, deleteItemById } from '../../Services/api';
+import { logoutUser, getItemById, deleteItemById } from '../../services/apiService';
 import EditItem from '../EditItem/EditItem';
+import styles from './ItemDetail.module.css'; // Importamos los estilos con CSS Module
 
 const ItemDetail = () => {
   const { id } = useParams();
@@ -10,6 +11,24 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+
+
+  useEffect(() => {
+    // Verifica si existe un token en el localStorage
+    const token = localStorage.getItem("token"); // O sessionStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if(role!=="admin"){
+      alert("No tienes permiso de administrador")
+      navigate("/"); // Redirige al home
+
+    }
+
+    if (!token) {
+      // Si no hay token, redirige al Home (por ejemplo, "/")
+      navigate("/"); // Redirige al home
+    }
+  }, [navigate]);  // Solo se ejecuta cuando el componente se monta
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -37,8 +56,8 @@ const ItemDetail = () => {
   };
 
   const handleSave = (updatedItem) => {
-    setItem(updatedItem); // Actualiza los datos del ítem
-    setIsEditing(false); // Cierra el modo edición
+    setItem(updatedItem);
+    setIsEditing(false);
   };
 
   const handleCancel = () => {
@@ -48,24 +67,24 @@ const ItemDetail = () => {
   const handleDelete = async () => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este ítem?')) {
       try {
-        await deleteItemById(id); // Llama a la API para eliminar el ítem
+        await deleteItemById(id);
         alert('Ítem eliminado exitosamente.');
-        navigate('/items'); // Redirige a la lista de ítems
+        navigate('/items');
       } catch (err) {
         console.error('Error al eliminar el ítem:', err);
         setError('Hubo un error al eliminar el ítem.');
       }
     }
   };
-//aa
+
   return (
     <div>
       <h1>Detalles del Ítem</h1>
-      <button onClick={handleLogout}>Cerrar sesión</button>
+      
       {loading && <p>Cargando detalles del ítem....</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
       {!loading && item && !isEditing && (
-        <div style={styles.card}>
+        <div className={styles.card}>
           <h2>{item.title}</h2>
           <p><strong>Talle:</strong> {item.talle}</p>
           <p><strong>Precio:</strong> ${item.price}</p>
@@ -75,53 +94,16 @@ const ItemDetail = () => {
             <img
               src={item.images}
               alt={item.title}
-              style={styles.images}
+              className={styles.image}
             />
           )}
-          <button style={styles.button} onClick={handleEditClick}>Editar Ítem</button>
-          <button style={styles.deleteButton} onClick={handleDelete}>Eliminar Ítem</button>
+          <button className={styles.button} onClick={handleEditClick}>Editar Ítem</button>
+          <button className={styles.deleteButton} onClick={handleDelete}>Eliminar Ítem</button>
         </div>
       )}
       {isEditing && <EditItem item={item} onSave={handleSave} onCancel={handleCancel} />}
     </div>
   );
-};
-
-const styles = {
-  card: {
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    padding: '16px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-    maxWidth: '500px',
-    margin: '20px auto',
-    textAlign: 'center',
-  },
-  image: {
-    width: '100%',
-    height: 'auto',
-    marginTop: '10px',
-    borderRadius: '8px',
-  },
-  button: {
-    marginTop: '10px',
-    padding: '10px 20px',
-    backgroundColor: '#007BFF',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  deleteButton: {
-    marginTop: '10px',
-    padding: '10px 20px',
-    backgroundColor: '#FF4136',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    marginLeft: '10px',
-  },
 };
 
 export default ItemDetail;

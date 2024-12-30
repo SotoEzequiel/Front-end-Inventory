@@ -39,6 +39,14 @@ export const registerUser = async (userData) => {
         localStorage.setItem('id', response.data.id);
         console.log('ID del usuario guardado en localStorage:', localStorage.getItem('id'));
       }
+      if (response.data.name) {
+        localStorage.setItem('name', response.data.name);
+        console.log('Nombre del usuario guardado en localStorage:', localStorage.getItem('name'));
+      }
+      if (response.data.role) {
+        localStorage.setItem('role', response.data.name);
+        console.log('Role del usuario guardado en localStorage:', localStorage.getItem('role'));
+      }
     }
 
     return response.data; // Devuelve la respuesta de la API
@@ -67,6 +75,14 @@ export const signInUser = async (userData) => {
         localStorage.setItem('id', response.data.id);
         console.log('ID del usuario guardado en localStorage:', localStorage.getItem('id'));
       }
+      if (response.data.name) {
+        localStorage.setItem('name', response.data.name);
+        console.log('Nombre del usuario guardado en localStorage:', localStorage.getItem('name'));
+      }
+      if (response.data.role) {
+        localStorage.setItem('role', response.data.name);
+        console.log('Role del usuario guardado en localStorage:', localStorage.getItem('role'));
+      }
     }
 
     return response.data; // Devuelve la respuesta de la API
@@ -82,6 +98,7 @@ export const logoutUser = () => {
     // Elimina el token y el ID del usuario de localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('id');
+    localStorage.removeItem('name');
     console.log('Usuario deslogueado correctamente.');
 
     // Opcional: redirigir al usuario a la página de inicio de sesión

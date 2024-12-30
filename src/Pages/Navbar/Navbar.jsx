@@ -1,34 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import NavbarLoggedIn from '../../pages/Navbar/NavbarLoggedIn';
+import NavbarLoggedOut from '../../pages/Navbar/NavbarLoggedOut';
+import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
-  return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">MiApp</Link>
-        <ul className="navbar-links">
-          <li>
-            <Link to="/" className="navbar-link">Inicio</Link>
-          </li>
-          <li>
-            <Link to="/about" className="navbar-link">Acerca de</Link>
-          </li>
-          <li>
-            <Link to="/createitem" className="navbar-link">Createitem</Link>
-          </li>
-          <li>
-            <Link to="/signin" className="navbar-link">Sign In</Link>
-          </li>
-          <li>
-            <Link to="/register" className="navbar-link">Register</Link>
-          </li>
-          <li>
-            <Link to="/itemsview" className="navbar-link">Todos los items</Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
+  const { isLoggedIn } = useContext(AuthContext);
+
+  return isLoggedIn ? <NavbarLoggedIn /> : <NavbarLoggedOut />;
 };
 
 export default Navbar;
+
+
+
+

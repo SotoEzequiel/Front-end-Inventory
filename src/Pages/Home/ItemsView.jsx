@@ -1,13 +1,15 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para la navegación
-import { getItems } from '../../Services/api';
+import { getItems } from '../../services/apiService';
+import Pagination from '../../pages/Home/pagination/Pagination'; // Importa el componente de paginación
+import styles from './ItemView.module.css'; // Importa los estilos
 
 const ItemView = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // Página actual
+  const itemsPerPage = 6; // Ítems por página
   const navigate = useNavigate(); // Hook de React Router para navegación
 
   useEffect(() => {
@@ -27,9 +29,15 @@ const ItemView = () => {
   }, []);
 
   const handleItemClick = (id) => {
-    console.log("id   "+id)
     navigate(`/items/${id}`); // Navega a la página de detalles del ítem
   };
+
+  // Calcular los ítems a mostrar en la página actual
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(items.length / itemsPerPage); // Total de páginas
 
   return (
     <div>
@@ -37,54 +45,38 @@ const ItemView = () => {
       {loading && <p>Cargando ítems...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {!loading && !error && items.length === 0 && <p>No hay ítems disponibles.</p>}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-        {items.map((item) => (
+      <div className={styles.itemsContainer}>
+        {currentItems.map((item) => (
           <div
             key={item._id}
-            style={styles.card}
-        
-            onClick={() => handleItemClick(item._id)}// Agrega el manejador de clics
+            className={styles.card}
+            onClick={() => handleItemClick(item._id)}
+            onMouseEnter={(e) => e.currentTarget.classList.add(styles.cardHover)} // Agregar efecto hover
+            onMouseLeave={(e) => e.currentTarget.classList.remove(styles.cardHover)} // Quitar efecto hover
           >
-            <h3>{item.title}</h3>
-            <p><strong>Talle:</strong> {item.talle}</p>
-            <p><strong>Precio:</strong> ${item.price}</p>
-            <p><strong>Categoría:</strong> {item.category}</p>
-            <p><strong>Color:</strong> {item.color}</p>
-            {item.imageUrl && (
+            {item.images && (
               <img
-                src={item.imageUrl}
+                src={item.images}
                 alt={item.title}
-                style={styles.image}
+                className={styles.image}
               />
             )}
+            <h3 className={styles.title}>{item.title}</h3>
+            <p className={styles.text}><strong>Talle:</strong> {item.talle}</p>
+            <p className={styles.text}><strong>Precio:</strong> ${item.price}</p>
+            <p className={styles.text}><strong>Categoría:</strong> {item.category}</p>
+            <p className={styles.text}><strong>Color:</strong> {item.color}</p>
           </div>
         ))}
       </div>
+      {/* Usar el componente de paginación */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
-};
-
-// Estilos para las tarjetas
-const styles = {
-  card: {
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    padding: '16px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-    maxWidth: '250px',
-    textAlign: 'center',
-    cursor: 'pointer', // Cambia el cursor al pasar el mouse
-    transition: 'transform 0.2s',
-  },
-  cardHover: {
-    transform: 'scale(1.05)', // Efecto hover
-  },
-  image: {
-    width: '100%',
-    height: 'auto',
-    marginTop: '10px',
-    borderRadius: '8px',
-  },
 };
 
 export default ItemView;
