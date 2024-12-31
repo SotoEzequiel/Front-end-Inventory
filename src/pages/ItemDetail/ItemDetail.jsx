@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { logoutUser, getItemById, deleteItemById } from '../../services/apiService';
-import EditItem from '../EditItem/EditItem';
+import { logoutUser, getItemById, deleteItemById } from '../../services/ApiService.jsx';
+import EditItem from '../editItem/EditItem.jsx';
 import styles from './ItemDetail.module.css'; // Importamos los estilos con CSS Module
 
 const ItemDetail = () => {

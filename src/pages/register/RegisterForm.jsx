@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback } from 'react';
-import { registerUser } from '../../services/apiService';
+import { registerUser } from '../../services/ApiService.jsx';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import styles from './RegisterForm.module.css'; // CSS Module

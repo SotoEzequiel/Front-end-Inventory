@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { updateItemById } from '../../services/apiService';
-
+import { updateItemById } from '../../services/ApiService.jsx';
 
 const EditItem = ({ item, onSave, onCancel }) => {
   const [editData, setEditData] = useState({}); 

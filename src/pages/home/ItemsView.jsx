@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para la navegación
-import { getItems } from '../../services/apiService';
+import { getItems } from '../../services/ApiService.jsx';
 import Pagination from '../../pages/Home/pagination/Pagination'; // Importa el componente de paginación
 import styles from './ItemView.module.css'; // Importa los estilos
 
