@@ -1,0 +1,87 @@
+/* Estilos generales para las tarjetas */
+.itemsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 280px;
+    width: 100%;
+    text-align: left; /* Alineamos el texto a la izquierda */
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    background: linear-gradient(145deg, #f0f1f6, #ffffff);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 450px; /* Altura fija para las tarjetas */
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .cardHover {
+    transform: scale(1.05);
+  }
+  
+  .image {
+    width: 100%;  /* Imagen ocupa el 100% del ancho de la tarjeta */
+    height: 180px; /* Altura fija para la imagen */
+    object-fit: cover; /* Recorta la imagen sin distorsionarla */
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .text {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  .text strong {
+    color: #2d9cdb; /* Color llamativo para los títulos */
+  }
+  
+  .cardFooter {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  .cardFooter .price {
+    font-weight: bold;
+    color: #e67e22; /* Color para el precio */
+  }
+  
+  .cardFooter .category {
+    font-style: italic;
+    color: #7f8c8d; /* Color para la categoría */
+  }
+  
+  .cardFooter .color {
+    font-style: italic;
+    color: #27ae60; /* Color para el color */
+  }
+  
