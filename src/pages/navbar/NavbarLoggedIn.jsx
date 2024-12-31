@@ -19,7 +19,7 @@ const NavbarLoggedIn = () => {
   const handleLogout = () => {
     logoutUser(); // Llama a la función de logout
     setUserName(null); // Limpia el estado
-    navigate('/home'); // Redirige al login
+    navigate('/'); // Redirige al login
   };
 
   return (
