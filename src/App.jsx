@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from "./Pages/Navbar/Navbar";
-import Home from "./Pages/Home/Home";
-import Register from "./Pages/Register/Register";
-import SignIn from './Pages/Signin/SignIn';
-import CreateItem from './Pages/CreateItem/CreateItem';
-import EditItem from './Pages/EditItem/EditItem';
-import ItemDetail from './Pages/ItemDetail/ItemDetail';
-import ItemView from './Pages/Home/ItemsView';
+import Navbar from "./Pages/navbar/Navbar";
+import Home from "./Pages/home/Home";
+import Register from "./Pages/register/Register";
+import SignIn from './pages/signin/SignIn';
+import CreateItem from './Pages/createItem/CreateItem';
+import EditItem from './Pages/editItem/EditItem';
+import ItemDetail from './Pages/itemDetail/ItemDetail';
+import ItemView from './Pages/home/ItemsView';
 import { AuthProvider } from './context/AuthContext';
-import ErrorPage from './pages/ErrorPage/ErrorPage';
+import ErrorPage from './pages/errorPage/ErrorPage';
 import "../src/app.css";
 
 
