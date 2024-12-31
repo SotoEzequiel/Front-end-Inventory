@@ -15,8 +15,7 @@ Este es un proyecto de una plataforma para la administración de productos. Los 
 
 - **Frontend**: React.js, React Router, Context API (para autenticación)
 - **Estilos**: CSS Modules
-- **Backend**: (Mencionar si tienes backend, si no puedes omitirlo)
-- **API**: (Si utilizas una API externa o propia para gestionar los productos)
+- **Backend**: https://github.com/SchetoT/inventary
 
 ## Instalación
 
