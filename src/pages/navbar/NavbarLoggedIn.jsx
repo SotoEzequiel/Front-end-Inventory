@@ -20,6 +20,7 @@ const NavbarLoggedIn = () => {
     logoutUser(); // Llama a la función de logout
     setUserName(null); // Limpia el estado
     navigate('/'); // Redirige al login
+    window.location.reload(); // Refresca la página
   };
 
   return (
