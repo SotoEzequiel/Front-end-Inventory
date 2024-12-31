@@ -27,7 +27,7 @@ Este es un proyecto de una plataforma para la administración de productos. Los 
 Instala las dependencias:
 
  ``` bash
-cd plataforma-de-administracion
+cd Front-end-Inventory
 npm install
  ```
 Inicia el servidor de desarrollo:
