@@ -6,7 +6,7 @@ import Register from "./pages/register/Register";
 import SignIn from './pages/signin/SignIn';
 import CreateItem from './pages/createItem/CreateItem';
 import EditItem from './pages/editItem/EditItem';
-import ItemDetail from './pages/itemDetail/ItemDetail';
+import ItemDetail from "./pages/itemDetail/ItemDetail"
 import ItemView from './pages/home/ItemsView';
 import { AuthProvider } from './context/AuthContext';
 import ErrorPage from './pages/errorPage/ErrorPage';
