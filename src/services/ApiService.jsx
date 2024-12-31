@@ -44,7 +44,7 @@ export const registerUser = async (userData) => {
         console.log('Nombre del usuario guardado en localStorage:', localStorage.getItem('name'));
       }
       if (response.data.role) {
-        localStorage.setItem('role', response.data.name);
+        localStorage.setItem('role', response.data.role);
         console.log('Role del usuario guardado en localStorage:', localStorage.getItem('role'));
       }
     }
@@ -80,7 +80,7 @@ export const signInUser = async (userData) => {
         console.log('Nombre del usuario guardado en localStorage:', localStorage.getItem('name'));
       }
       if (response.data.role) {
-        localStorage.setItem('role', response.data.name);
+        localStorage.setItem('role', response.data.role);
         console.log('Role del usuario guardado en localStorage:', localStorage.getItem('role'));
       }
     }
