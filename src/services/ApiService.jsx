@@ -102,8 +102,7 @@ export const logoutUser = () => {
     localStorage.removeItem('role');
     console.log('Usuario deslogueado correctamente.');
 
-    // Opcional: redirigir al usuario a la página de inicio de sesión
-    window.location.href = '/'; // Asegúrate de que la ruta '/home' exista
+    return "deslogeado"
   } catch (error) {
     console.error('Error al desloguearse:', error.message);
   }
