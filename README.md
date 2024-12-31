@@ -22,7 +22,7 @@ Este es un proyecto de una plataforma para la administración de productos. Los 
 1. Clona el repositorio:
 
    ``` bash
-   git clone https://github.com/tu-usuario/plataforma-de-administracion.git
+   git clone https://github.com/SotoEzequiel/Front-end-Inventory
 
 Instala las dependencias:
 
