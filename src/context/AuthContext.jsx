@@ -5,21 +5,23 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Verifica el estado de autenticación al cargar la app
   useEffect(() => {
-    // Verificar si el usuario está autenticado al cargar la app
-    const token = localStorage.getItem('token');
-    
-    setIsLoggedIn(!!token);
+    const token = localStorage.getItem('token'); // Ejemplo: verifica un token en localStorage
+    setIsLoggedIn(!!token); // Si existe el token, está logueado
   }, []);
 
   const login = (token) => {
-    localStorage.setItem('token', token);
-    setIsLoggedIn(true);
+    localStorage.setItem('token', token); // Guarda el token en localStorage
+    setIsLoggedIn(true); // Actualiza el estado
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    localStorage.removeItem('id');
+    localStorage.removeItem('name');
+    localStorage.removeItem('role');
+    setIsLoggedIn(false); // Actualiza el estado
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import NavbarLoggedIn from '../../pages/navbar/NavbarLoggedIn';
-import NavbarLoggedOut from '../../pages/navbar/NavbarLoggedOut';
+import NavbarLoggedIn from './NavbarLoggedIn';
+import NavbarLoggedOut from './NavbarLoggedOut';
 import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
@@ -10,7 +10,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
 

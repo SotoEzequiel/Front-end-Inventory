@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { logoutUser } from '../../services/ApiService.jsx';
 import styles from './Navbar.module.css';
 import Button from '../../component/Buttom';
 import Logo from '../../component/Logo';
+import { AuthContext } from '../../context/AuthContext';
 
 const NavbarLoggedIn = () => {
   const [userName, setUserName] = useState(null);
   const navigate = useNavigate();
-
+  const { logout } = useContext(AuthContext);
+  
   useEffect(() => {
     const storedName = localStorage.getItem('name'); // Obtén el nombre del usuario desde localStorage
     if (storedName) {
@@ -17,10 +18,12 @@ const NavbarLoggedIn = () => {
   }, []);
 
   const handleLogout = () => {
-    logoutUser(); // Llama a la función de logout
+    
+    // logoutUser(); // Llama a la función de logout
+    logout()
     setUserName(null); // Limpia el estado
+
     navigate('/'); // Redirige al login
-    window.location.reload(); // Refresca la página
   };
 
   return (

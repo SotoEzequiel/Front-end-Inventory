@@ -12,7 +12,6 @@ import { AuthProvider } from './context/AuthContext';
 import ErrorPage from './pages/errorPage/ErrorPage';
 import "../src/app.css";
 
-
 function App() {
   return (
     <AuthProvider>
