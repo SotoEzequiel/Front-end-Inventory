@@ -23,7 +23,7 @@ Este es un proyecto de una plataforma para la administración de productos. Los 
 
    ``` bash
    git clone https://github.com/tu-usuario/plataforma-de-administracion.git
-```
+
 Instala las dependencias:
 
  ``` bash
