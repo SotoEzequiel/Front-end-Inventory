@@ -17,7 +17,7 @@ export default function SignIn() {
       navigate("/"); // Redirige al home
     }
   }, [navigate]);  // Solo se ejecuta cuando el componente se monta
-
+ 
     return (
       <SignInForm/>
     );
