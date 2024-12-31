@@ -99,10 +99,11 @@ export const logoutUser = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('id');
     localStorage.removeItem('name');
+    localStorage.removeItem('role');
     console.log('Usuario deslogueado correctamente.');
 
     // Opcional: redirigir al usuario a la página de inicio de sesión
-    window.location.href = '/login'; // Asegúrate de que la ruta '/login' exista
+    window.location.href = '/home'; // Asegúrate de que la ruta '/home' exista
   } catch (error) {
     console.error('Error al desloguearse:', error.message);
   }
